@@ -1,0 +1,30 @@
+schema {
+  mutation: Mutation
+  query: Query
+  subscription: Subscription
+}
+
+type Notification @aws_iam @aws_lambda @aws_api_key {
+	notificationId: String!
+	companyId: String!
+}
+
+input CreateNotificationInput {
+	notificationId: String!
+	companyId: String!
+}
+
+type Mutation {
+	createNotification(input: CreateNotificationInput!): Notification
+		@aws_iam
+}
+
+type Query {
+}
+
+type Subscription {
+	onCreateNotification(pharmacyId: String): Notification
+		@aws_subscribe(mutations: ["createNotification"])
+    @aws_lambda
+		@aws_api_key
+}

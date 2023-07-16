@@ -1,0 +1,8 @@
+{
+    "version" : "2018-05-29",
+    "operation" : "PutItem",
+    "key": {
+        "notificationId": $util.dynamodb.toDynamoDBJson($ctx.args.input.notificationId),
+        "companyId": $util.dynamodb.toDynamoDBJson($ctx.args.input.companyId),
+    },
+}
