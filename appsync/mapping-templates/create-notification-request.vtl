@@ -5,4 +5,7 @@
         "notificationId": $util.dynamodb.toDynamoDBJson($ctx.args.input.notificationId),
         "companyId": $util.dynamodb.toDynamoDBJson($ctx.args.input.companyId),
     },
+    "attributeValues": {
+        "ttl": $util.dynamodb.toDynamoDBJson($util.time.nowEpochSeconds()),
+    }
 }

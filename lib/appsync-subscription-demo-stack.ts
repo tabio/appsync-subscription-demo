@@ -82,5 +82,12 @@ export class AppsyncSubscriptionDemoStack extends cdk.Stack {
         APPSYNC_URL: appsyncApi.graphqlUrl,
       },
     });
+
+    // LambdaにAppSyncのAPIをInvokeする権限を付与
+    createNotificationLambda.addToRolePolicy(new iam.PolicyStatement({
+      effect: iam.Effect.ALLOW,
+      actions: ['appsync:*'],
+      resources: [appsyncApi.arn],
+    }));
   }
 }

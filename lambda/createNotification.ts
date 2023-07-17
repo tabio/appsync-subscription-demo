@@ -3,6 +3,7 @@ import fetch from 'cross-fetch';
 import { SignatureV4 } from '@aws-sdk/signature-v4';
 import { HttpRequest } from '@aws-sdk/protocol-http';
 import { Sha256 } from '@aws-crypto/sha256-universal';
+import { z } from "zod";
 
 // contextはnotificationIdとcompnayIdのStringを持つので型を定義
 interface Params {
@@ -10,7 +11,27 @@ interface Params {
   companyId: string;
 }
 
+const REGEX_NOTIFICATION_ID = /^Service:\d+$/;
+const REGEX_COMPANY_ID = /^Company:\d+$/;
+const schema = z.object({
+  notificationId: z.string().regex(REGEX_NOTIFICATION_ID),
+  companyId: z.string().regex(REGEX_COMPANY_ID),
+});
+
 exports.handler = async (event: Params, context: any) => {
+  let statusCode = 200;
+  let input: Params;
+  try {
+    input = schema.parse(event);
+  } catch(e) {
+    console.error(e);
+    statusCode = 400;
+    return {
+      statusCode,
+      body: JSON.stringify(e),
+    };
+  }
+
   const uri = process.env.APPSYNC_URL!;
   const bodyItem = {
     query: `
@@ -24,8 +45,8 @@ exports.handler = async (event: Params, context: any) => {
     operationName: 'createNotification',
     variables: {
       createNotificationInput: {
-        notificationId: event.notificationId,
-        companyId: event.companyId,
+        notificationId: input!.notificationId,
+        companyId: input!.companyId,
       },
     },
   };
@@ -47,7 +68,6 @@ exports.handler = async (event: Params, context: any) => {
     method: 'POST',
     path: apiUrl.pathname,
   });
-  let statusCode = 200;
   let responseBody;
   try {
     const { headers, body, method }  = await _signatureV4.sign(httpRequest);
