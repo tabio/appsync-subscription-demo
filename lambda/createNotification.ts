@@ -1,8 +1,8 @@
-import { defaultProvider } from '@aws-sdk/credential-provider-node';
-import fetch from 'cross-fetch';
-import { SignatureV4 } from '@aws-sdk/signature-v4';
-import { HttpRequest } from '@aws-sdk/protocol-http';
-import { Sha256 } from '@aws-crypto/sha256-universal';
+import { defaultProvider } from "@aws-sdk/credential-provider-node";
+import fetch from "cross-fetch";
+import { SignatureV4 } from "@aws-sdk/signature-v4";
+import { HttpRequest } from "@aws-sdk/protocol-http";
+import { Sha256 } from "@aws-crypto/sha256-universal";
 import { z } from "zod";
 
 // contextはnotificationIdとcompnayIdのStringを持つので型を定義
@@ -23,7 +23,7 @@ exports.handler = async (event: Params, context: any) => {
   let input: Params;
   try {
     input = schema.parse(event);
-  } catch(e) {
+  } catch (e) {
     console.error(e);
     statusCode = 400;
     return {
@@ -42,7 +42,7 @@ exports.handler = async (event: Params, context: any) => {
         }
       }
     `,
-    operationName: 'createNotification',
+    operationName: "createNotification",
     variables: {
       createNotificationInput: {
         notificationId: input!.notificationId,
@@ -53,24 +53,24 @@ exports.handler = async (event: Params, context: any) => {
 
   const apiUrl = new URL(uri);
   const _signatureV4 = new SignatureV4({
-    service: 'appsync',
-    region: 'ap-northeast-1',
+    service: "appsync",
+    region: "ap-northeast-1",
     credentials: defaultProvider(),
     sha256: Sha256,
   });
   const httpRequest = new HttpRequest({
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
       host: apiUrl.host,
     },
     body: JSON.stringify(bodyItem),
     hostname: apiUrl.hostname,
-    method: 'POST',
+    method: "POST",
     path: apiUrl.pathname,
   });
   let responseBody;
   try {
-    const { headers, body, method }  = await _signatureV4.sign(httpRequest);
+    const { headers, body, method } = await _signatureV4.sign(httpRequest);
     const res = await fetch(uri, {
       headers,
       body,
@@ -80,7 +80,7 @@ exports.handler = async (event: Params, context: any) => {
     if (responseBody.errors) {
       statusCode = 400;
     }
-  } catch(error) {
+  } catch (error) {
     statusCode = 500;
     console.error(error);
   }
@@ -88,4 +88,4 @@ exports.handler = async (event: Params, context: any) => {
     statusCode,
     body: JSON.stringify(responseBody),
   };
-}
+};
