@@ -58,9 +58,6 @@ export class AppsyncSubscriptionDemoStack extends cdk.Stack {
             {
               authorizationType: appsync.AuthorizationType.IAM,
             },
-            {
-              authorizationType: appsync.AuthorizationType.API_KEY,
-            },
           ],
         },
         logConfig: {

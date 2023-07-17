@@ -138,10 +138,6 @@ digraph "Diagram" {
           label = " APPSYNC\nGRAPHQLSCHEMA Schema",
           fontsize = 12,
         ];
-        "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/DefaultApiKey" [
-          label = " APPSYNC APIKEY\nDefaultApiKey",
-          fontsize = 12,
-        ];
         "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/ApiLogsRole/Resource" [
           label = " IAM Role",
           fontsize = 12,
@@ -241,19 +237,45 @@ digraph "Diagram" {
           width = 2,
           height = 2.266,
         ];
-        "AppsyncSubscriptionDemoStack/createNotificationLambda/ServiceRole/Resource" [
-          label = " IAM Role",
-          fontsize = 12,
-          image = "/Users/atsushi/Work/appsync-subscription-demo/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
-          imagescale = "true",
-          imagepos = "tc",
-          penwidth = "0",
-          shape = "node",
-          fixedsize = "true",
-          labelloc = "b",
-          width = 1.2,
-          height = 1.466,
-        ];
+        subgraph "cluster-SubGraph.ServiceRole" {
+          graph [
+            label = "ServiceRole",
+            labelloc = "b",
+            labeljust = "l",
+            margin = "10",
+            fontsize = "16",
+            penwidth = "2",
+            pencolor = "#888888",
+            style = "filled,rounded",
+            fillcolor = "#c7c7c7",
+          ];
+          "AppsyncSubscriptionDemoStack/createNotificationLambda/ServiceRole/Resource" [
+            label = " IAM Role",
+            fontsize = 12,
+            image = "/Users/atsushi/Work/appsync-subscription-demo/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+          "AppsyncSubscriptionDemoStack/createNotificationLambda/ServiceRole/DefaultPolicy/Resource" [
+            label = " IAM Policy",
+            fontsize = 12,
+            image = "/Users/atsushi/Work/appsync-subscription-demo/node_modules/cdk-dia/icons/aws/Service/Arch_Security-Identity-Compliance/64/Arch_AWS-Identity-and-Access-Management_64@5x.png",
+            imagescale = "true",
+            imagepos = "tc",
+            penwidth = "0",
+            shape = "node",
+            fixedsize = "true",
+            labelloc = "b",
+            width = 1.2,
+            height = 1.466,
+          ];
+        }
       }
     }
   }
@@ -275,9 +297,6 @@ digraph "Diagram" {
   "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/Schema" -> "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/Resource" [
     dir = "both",
   ];
-  "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/DefaultApiKey" -> "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/Resource" [
-    dir = "both",
-  ];
   "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/NotificationTableDataSource/ServiceRole/DefaultPolicy/Resource" -> "AppsyncSubscriptionDemoStack/NotificationTable/Resource" [
     dir = "both",
   ];
@@ -294,6 +313,12 @@ digraph "Diagram" {
     dir = "both",
   ];
   "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/createNotificationMutation/Resource" -> "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/Resource" [
+    dir = "both",
+  ];
+  "AppsyncSubscriptionDemoStack/createNotificationLambda/ServiceRole/DefaultPolicy/Resource" -> "AppsyncSubscriptionDemoStack/AppSyncSubscriptionDemoAppSyncApi/Resource" [
+    dir = "both",
+  ];
+  "AppsyncSubscriptionDemoStack/createNotificationLambda/ServiceRole/DefaultPolicy/Resource" -> "AppsyncSubscriptionDemoStack/createNotificationLambda/ServiceRole/Resource" [
     dir = "both",
   ];
   "AppsyncSubscriptionDemoStack/createNotificationLambda/Resource" -> "AppsyncSubscriptionDemoStack/createNotificationLambda/ServiceRole/Resource" [

@@ -5,7 +5,6 @@ import { HttpRequest } from "@aws-sdk/protocol-http";
 import { Sha256 } from "@aws-crypto/sha256-universal";
 import { z } from "zod";
 
-// contextはnotificationIdとcompnayIdのStringを持つので型を定義
 interface Params {
   notificationId: string;
   companyId: string;

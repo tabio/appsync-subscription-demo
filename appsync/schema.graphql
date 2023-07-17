@@ -4,7 +4,7 @@ schema {
   subscription: Subscription
 }
 
-type Notification @aws_iam @aws_lambda @aws_api_key {
+type Notification @aws_iam @aws_lambda {
 	notificationId: String!
 	companyId: String!
 }
@@ -26,5 +26,4 @@ type Subscription {
 	onCreateNotification(pharmacyId: String): Notification
 		@aws_subscribe(mutations: ["createNotification"])
     @aws_lambda
-		@aws_api_key
 }
