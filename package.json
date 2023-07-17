@@ -25,6 +25,7 @@
     "@aws-sdk/protocol-http": "^3.370.0",
     "@aws-sdk/signature-v4": "^3.370.0",
     "aws-cdk-lib": "2.87.0",
+    "cdk-dia": "^0.10.0",
     "constructs": "^10.0.0",
     "cross-fetch": "^4.0.0",
     "source-map-support": "^0.5.21"
