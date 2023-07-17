@@ -23,6 +23,7 @@ export class AppsyncSubscriptionDemoStack extends cdk.Stack {
         type: dynamodb.AttributeType.STRING,
       },
       removalPolicy: cdk.RemovalPolicy.DESTROY,
+      timeToLiveAttribute: "ttl",
     });
 
     // ---> AppSync

@@ -5,5 +5,5 @@
 ![](./diagram.png)
 
 ```sh
-npx cdk-dia --collapse=false
+cdk synth && npx cdk-dia --collapse=false
 ```
